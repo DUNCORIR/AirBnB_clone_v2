@@ -53,14 +53,15 @@ class FileStorage:
                     'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
                     'Review': Review
-                  }
+        }
         try:
             with open(self.__file_path, 'r') as f:
                 data = json.load(f)
                 for key, val in data.items():
                     cls_name = key.split('.')[0]
-                    cls = globals()[cls_name]
-                    self.__objects[key] = cls(**value)
+                    cls = classes.get(cls_name)
+                    if cls:
+                        self.__objects[key] = cls(**val)
         except FileNotFoundError:
             pass
 
