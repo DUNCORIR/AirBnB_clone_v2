@@ -8,7 +8,7 @@ class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'  # Name of the table in the database
 
-    # All fields can't be null.
+    # All fields can't/can be null.
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
