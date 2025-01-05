@@ -56,8 +56,9 @@ class BaseModel:
         """Convert instance to dictionary, exclude non-serializable fields"""
         dict_rep = self.__dict__.copy()  # Copy the dictionary
         dict_rep["id"] = str(self.id)  # Ensure 'id' is a string
-        dict_rep["created_at"] = self.created_at.isoformat()  # Convert datetime to string
-        dict_rep["updated_at"] = self.updated_at.isoformat()  # Convert datetime to string
+        # Convert datetime to string
+        dict_rep["created_at"] = self.created_at.isoformat()
+        dict_rep["updated_at"] = self.updated_at.isoformat()
 
         # Remove SQLAlchemy instance state (not serializable)
         if "_sa_instance_state" in dict_rep:

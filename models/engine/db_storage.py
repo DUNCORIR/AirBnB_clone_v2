@@ -12,6 +12,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class DBStorage:
     def __init__(self):
         """Initialize the DBStorage engine."""
@@ -28,7 +29,7 @@ class DBStorage:
         )
         Session = sessionmaker(bind=self.__engine)
         self.__session = scoped_session(Session)
-        
+
     def all(self):
         """Return a dictionary of all objects from the database."""
         all_objects = {}
