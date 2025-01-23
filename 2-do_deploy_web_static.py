@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 """
 Fabric script to deploy an archive on server using do__deploy function.
 """
