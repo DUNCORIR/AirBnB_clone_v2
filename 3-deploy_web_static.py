@@ -25,7 +25,7 @@ def do_pack():
 
     # Generate the archive name with the current date and time
     current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_name = f"versions/web_static_{current_time}.tgz"
+    archive_name = os.path.join("versions", f"web_static_{current_time}.tgz")
 
     # Create the archive
     try:
@@ -74,7 +74,7 @@ def do_deploy(archive_path):
 
         # Create a new symbolic link pointing to the new release
         run(f"ln -s {release_path} /data/web_static/current")
-
+        run("sudo chown -R ubuntu:ubuntu /data/")
         return True
     except Exception as e:
         print(f"An error occurred during deployment: {e}")
