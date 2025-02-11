@@ -27,19 +27,26 @@ class DBStorage:
             f"mysql+mysqldb://{user}:{pwd}@{host}/{db}",
             pool_pre_ping=True
         )
-        Session = sessionmaker(bind=self.__engine)
-        self.__session = scoped_session(Session)
+        Session = scoped_session(sessionmaker(bind=self.__engine))
+        self.__session = Session
 
-    def all(self):
+    def all(self, cls=None):
         """Return a dictionary of all objects from the database."""
         all_objects = {}
         # Explicitly list the classes you want to query
         classes = [State, City, User, Amenity, Place, Review]
-        for cls in classes:
-            if hasattr(cls, '__tablename__'):
+
+        if cls:
+            if cls in classes:
                 objects = self.__session.query(cls).all()
                 for obj in objects:
                     all_objects[f"{cls.__name__}.{obj.id}"] = obj
+        else:
+            for cls in classes:
+                if hasattr(cls, '__tablename__'):
+                    objects = self.__session.query(cls).all()
+                    for obj in objects:
+                        all_objects[f"{cls.__name__}.{obj.id}"] = obj
         return all_objects
 
     def new(self, obj):
@@ -60,3 +67,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine)
         self.__session = Session()
+
+    def close(self):
+        """Closes the current SQLAlchemy session.."""
+        self.__session.remove()
