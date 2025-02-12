@@ -5,6 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import models
 import os
+from os import getenv
 from models.city import City
 
 
@@ -20,12 +21,7 @@ class State(BaseModel, Base):
 
     name = Column(String(128), nullable=False)
 
-    if models.storage_type == "db":
-        # Relationship for DBStorage
-        cities = relationship(
-            "City", backref="state", cascade="all, delete, delete-orphan"
-        )
-    else:
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
         # Getter attribute for Filestorage
         @property
         def cities(self):
@@ -33,7 +29,10 @@ class State(BaseModel, Base):
             Returns a list of City instances where
             state_id equals the current State.id.
             """
+            from models.city import City
             return [
                 city for city in models.storage.all(City).values()
                 if city.state_id == self.id
             ]
+    else:
+        cities = relationship("City", backref="state", cascade="all, delete")
