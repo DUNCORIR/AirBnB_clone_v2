@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HBNB Filters</title>
+	<!-- Link to CSS files -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}">
+	<!-- Link to icon -->
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+</head>
+<body>
+	<!-- Header -->
+	<header>
+		<div class="logo"></div>
+	</header>
+	<!-- Main content with filters -->
+	<div class="container">
+		<!-- Filters Section -->
+		<section class="filters">
+			<!-- Location Filter -->
+			<div class="locations">
+				<h3>States</h3>
+				<h4>&nbsp;</h4>
+				<ul class="popover">
+					{% for state in states %}
+					<li>
+						<h2>{{ state.name }}</h2>
+						<ul>
+							{% for city in state.cities %}
+							<li>{{ city.name }}</li>
+							{% endfor %}
+						</ul>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<!-- Amenities Filter -->
+			<div class="amenities">
+				<h3>Amenities</h3>
+				<h4>&nbsp;</h4>
+				<ul class="popover">
+					{% for amenity in amenities %}
+					<li>{{ amenity.name }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<!-- Search Button -->
+			<button class="search-btn">Search</button>
+		</section>
+	</div>
+	<!-- Footer -->
+	<footer>
+		Best School
+	</footer>
+</body>
+</html>
