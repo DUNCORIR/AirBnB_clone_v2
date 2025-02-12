@@ -69,3 +69,8 @@ class BaseModel:
     def delete(self):
         """Delete the current instance from storage."""
         models.storage.delete(self)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize Place instance"""
+        super().__init__(*args, **kwargs)
+        self.amenity_ids = []
